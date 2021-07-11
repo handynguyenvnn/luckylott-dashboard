@@ -1,0 +1,15 @@
+export const enum WithdrawalStatus {
+  PENDING = 'PENDING',
+
+  PROCESSING = 'PROCESSING',
+
+  PROCESSED = 'PROCESSED',
+
+  REJECTED = 'REJECTED',
+
+  CANCELLED = 'CANCELLED',
+
+  FAILED = 'FAILED',
+
+  APPROVAL_NEEDED = 'APPROVAL_NEEDED',
+}

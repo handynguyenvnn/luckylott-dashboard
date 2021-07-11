@@ -1,0 +1,54 @@
+<nz-card>
+  <div class="d-flex justify-content-between">
+    <div class="media"></div>
+    <div>
+<!--      <button nz-button nzType="primary" title="Create" (click)="create()" [disabled]="playerFilterForm.invalid">Create</button>-->
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table [nzData]="players" [nzLoading]="isSpinning" [nzShowPagination]="false" [nzFrontPagination]="false">
+      <thead>
+      <tr>
+        <th>TeleID</th>
+        <th>TeleName</th>
+        <th>CMS(username)</th>
+        <th>Balance</th>
+        <th>Wallet</th>
+        <th>Referral Code</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of players ;trackBy: trackId">
+          <td><a href="javascript:void (0)">{{ player?.teleId }}</a></td>
+          <td>{{ player?.teleName }}</td>
+          <td>{{player?.username}}</td>
+          <td>
+            <div class="d-flex flex-column">
+              <div class="d-flex" *ngFor="let playerBalance of player.playerBalances">
+                <span style="margin-right: 10px;">{{playerBalance.tokenName}}: </span>
+                <span>{{playerBalance.balance}}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <div class="d-flex" *ngFor="let playerWallet of player.playerWallets">
+                <span style="margin-right: 10px;">{{playerWallet.tokenName}} - {{playerWallet.networkType}}: </span>
+                <span>{{playerWallet.address}}</span>
+              </div>
+
+            </div>
+          </td>
+          <td>{{ player?.refCode }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  <div class="ant-table-pagination ant-pagination">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                   [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+    </ng-template>
+  </div>
+</nz-card>

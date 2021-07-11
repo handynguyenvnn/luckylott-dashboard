@@ -1,0 +1,91 @@
+<form nz-form nzLayout="vertical" novalidate [formGroup]="gameForm">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+          <nz-form-item>
+            <nz-form-label>Game code</nz-form-label>
+            <nz-form-control>
+              <input nz-input placeholder="Please input game code" formControlName="gameCode">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-md-4">
+          <nz-form-item>
+            <nz-form-label>Pool</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="poolId" nzPlaceHolder="Select a pool">
+                <nz-option *ngFor="let pool of pools"
+                           [nzValue]="pool.id" [nzLabel]="pool.name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-md-4">
+          <nz-form-item>
+            <nz-form-label>Game Status</nz-form-label>
+            <nz-form-control>
+              <nz-select [(ngModel)]="status" formControlName="gameStatus" nzPlaceHolder="Select a status">
+                <nz-option nzValue="OPEN" nzLabel="Open"></nz-option>
+                <nz-option nzValue="WAITING_RESULT" nzLabel="Waiting Result"></nz-option>
+                <nz-option nzValue="CLOSED" nzLabel="Close"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label>Draw Date</nz-form-label>
+            <nz-form-control>
+              <nz-date-picker formControlName="drawDate" [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                              nzFormat="yyyy-MM-dd HH:mm"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label>Close Date</nz-form-label>
+            <nz-form-control>
+              <nz-date-picker formControlName="closeDate" [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                              nzFormat="yyyy-MM-dd HH:mm"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div *ngIf="status === 'CLOSED'" class="row" formArrayName="gameResults">
+        <div class="col-md-4" *ngFor="let gameResultItem of tempGameResultForm.controls; let resultIndex = index;" [formGroupName]="resultIndex">
+          <nz-form-item>
+            <nz-form-label *ngIf="resultIndex === 0">Num_2 Result</nz-form-label>
+            <nz-form-label *ngIf="resultIndex === 1">Num_3 Result</nz-form-label>
+            <nz-form-label *ngIf="resultIndex === 2">Num_4 Result</nz-form-label>
+            <nz-form-control *ngIf="resultIndex === 0">
+              <input type="text" nz-input placeholder="game result" formControlName="result" [maxLength]="2">
+            </nz-form-control>
+            <nz-form-control *ngIf="resultIndex === 1">
+              <input type="text" nz-input placeholder="game result" formControlName="result" [maxLength]="3">
+            </nz-form-control>
+            <nz-form-control *ngIf="resultIndex === 2">
+              <input type="text" nz-input placeholder="game result" formControlName="result" [maxLength]="4">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+        <button nz-button nzType="primary"
+                [disabled]="gameForm.invalid || isSaving || game?.gameStatus === 'CLOSED'"
+                nz-popconfirm
+                nzPopconfirmTitle="Are you sure submit this?"
+                nzPopconfirmPlacement="top"
+                (nzOnConfirm)="save()"
+                (nzOnCancel)="cancel()">{{btnLabel}}</button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>

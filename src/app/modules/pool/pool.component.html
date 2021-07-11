@@ -1,0 +1,54 @@
+<nz-card>
+  <div class="d-flex justify-content-between">
+    <div class="media">
+    </div>
+    <div>
+      <!--button nz-button nzType="primary" title="Create" (click)="create()" [disabled]="poolFilterForm.invalid">
+        <i nz-icon nzType="plus-circle" nzTheme="outline"></i>New Pool
+      </button-->
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table [nzData]="list" [nzLoading]="isSpinning" [nzShowPagination]="false" [nzFrontPagination]="false">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Init Deposit</th>
+        <th>Bet Amount</th>
+        <!--th>Type</th-->
+        <th>Balance</th>
+        <th>Token</th>
+        <th class="text-md-center"></th>
+        <th *appHasAnyAuthority="['ROLE_ADMIN']"></th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pool of list ;trackBy: trackId">
+          <td>{{ pool?.name }}</td>
+          <td>{{ pool?.initDeposit | number }}</td>
+          <td>{{ pool?.betAmount | number }}</td>
+          <!--td>{{ pool?.poolType }}</td-->
+          <td>{{ pool?.balance | number }}</td>
+          <td>{{ pool?.tokenName }}</td>
+          <td class="text-md-center">
+            <button nz-button nzType="primary" (click)="buildRewardModal(pool)">Reward</button>
+            <button nz-button nzType="default" (click)="buildSettingModal(pool)">Setting</button>
+          </td>
+          <td class="text-md-right" *appHasAnyAuthority="['ROLE_ADMIN']">
+            <a class="m-r-5" style="line-height: 0;" nz-button nzType="default"
+               nzShape="circle" nz-tooltip nszTitle="Edit Pool" nzPlacement="bottom" (click)="updatePool(pool)">
+              <i nz-icon nzType="edit" theme="outline"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="ant-table-pagination ant-pagination">
+      <nz-pagination [nzPageIndex]="page" [nzTotal]="queryParams.totalItems" [nzPageSize]="queryParams.size"
+                     [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+      <ng-template #rangeTemplate let-range="range" let-total>
+        {{ range[0] }} - {{ range[1] }} of {{ queryParams.totalItems }} items
+      </ng-template>
+    </div>
+</nz-card>

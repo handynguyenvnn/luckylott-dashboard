@@ -1,0 +1,120 @@
+<nz-card>
+  <div class="row align-items-center">
+    <div class="col-md-7">
+      <div class="d-md-flex align-items-center">
+        <div class="text-center text-sm-left ">
+          <nz-avatar class="shadow-sm m-v-15" [nzSize]="150" nzIcon="user"></nz-avatar>
+        </div>
+        <div class="text-center text-sm-left m-v-15 p-l-30">
+          <h2 class="m-b-5">{{agentReport?.merchant.name}}</h2>
+          <p class="text-opacity">Referral Code: {{agentReport?.merchant.code}}</p>
+          <p class="text-dark m-b-20">Commission: {{agentReport?.merchant.commission}}%</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="row">
+        <div class="d-md-block d-none border-left col-1"></div>
+        <div class="col">
+          <ul class="list-unstyled m-t-10">
+            <li class="row">
+              <p class="col-sm-4 col-5 font-weight-semibold text-dark m-b-5">
+                <i class="m-r-10 text-primary" nz-icon nzType="sketch" theme="outline"></i>
+                <span>Total Bet Amount: </span>
+              </p>
+              <p class="col font-weight-semibold"> {{agentReport?.betAmount}} mBTC</p>
+            </li>
+            <li class="row">
+              <p class="col-sm-4 col-5 font-weight-semibold text-dark m-b-5">
+                <i class="m-r-10 text-primary" nz-icon nzType="user" theme="outline"></i>
+                <span>Total players: </span>
+              </p>
+              <p class="col font-weight-semibold">{{agentReport?.totalUser}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-4"></div>
+    <div class="col-2">
+      <ul nz-menu nzMode="horizontal">
+        <li nz-menu-item nzSelected style="text-transform: uppercase;" (click)="filterAgent(false)">
+          <i nz-icon nzType="user"></i>
+          Members List
+        </li>
+        <li nz-menu-item style="text-transform: uppercase;" (click)="filterAgent(true)">
+          <i nz-icon nzType="appstore"></i>
+          Report
+        </li>
+      </ul>
+    </div>
+    <div class="col-6"></div>
+  </div>
+</nz-card>
+<nz-card>
+  <form nz-form [formGroup]="filterForm">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24">From</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="fromDate" nzPlaceHolder="Select date" nzFormat="dd-MM-yyyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-2">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24">To</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="toDate" nzPlaceHolder="Select date" nzFormat="dd-MM-yyyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-3">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24">Telegram ID</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <input type="text" nz-input placeholder="Telegram ID" formControlName="teleId">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-3">
+        <button nz-button nzType="primary" title="Filter" (click)="doFilter()" [disabled]="filterForm.invalid">Filter</button>
+      </div>
+
+    </div>
+  </form>
+  <nz-divider></nz-divider>
+  <nz-table #listViewTable [nzData]="players" [nzLoading]="isSpinning"
+            [nzShowPagination]="false" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th>Telegram ID</th>
+      <th>Telegram Name</th>
+      <th *ngIf="isReport">Bet Amount</th>
+      <th *ngIf="isReport">Win/Lose</th>
+      <th>Join Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let player of players ;trackBy: trackId">
+      <td>{{ player?.teleId }}</td>
+      <td>{{ player?.teleName }}</td>
+      <td *ngIf="isReport">{{ player?.betAmount }}</td>
+      <td *ngIf="isReport">{{ player?.betWinLose }}</td>
+      <td>{{player?.joinDate | date: 'MM-dd-yyyy h:mm:ss'}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <div class="ant-table-pagination ant-pagination">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                   [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage(this.isReport, $event)"></nz-pagination>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+    </ng-template>
+  </div>
+</nz-card>

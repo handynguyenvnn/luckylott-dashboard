@@ -1,0 +1,55 @@
+<form nz-form nzLayout="vertical" novalidate [formGroup]="editForm">
+    <div class="row">
+      <div class="col-md-12">
+        <nz-form-item>
+          <nz-form-label>Name</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="Please input name" formControlName="name">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-md-12">
+        <nz-form-item>
+          <nz-form-label>Init Deposit</nz-form-label>
+          <nz-form-control>
+            <input type="text" nz-input placeholder="Please input init deposit" formControlName="initDeposit">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-md-12">
+        <nz-form-item>
+          <nz-form-label>Bet Amount</nz-form-label>
+          <nz-form-control>
+            <input type="text" nz-input placeholder="Please input bet amount" formControlName="betAmount">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!--div class="col-md-12">
+        <nz-form-item>
+          <nz-form-label>Pool Type</nz-form-label>
+          <nz-form-control>
+            <input type="text" nz-input placeholder="Please input pool type" formControlName="poolType">
+          </nz-form-control>
+        </nz-form-item>
+      </div-->
+      <div class="col-md-12">
+        <nz-form-item>
+          <nz-form-label>Token</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="tokenId">
+              <nz-option *ngFor="let token of tokens"
+              [nzValue]="token.id" [nzLabel]="token.name"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <div *nzModalFooter>
+          <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+          <button nz-button nzType="primary" (click)="save()" [disabled]="editForm.invalid || isSaving">Save</button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </form>

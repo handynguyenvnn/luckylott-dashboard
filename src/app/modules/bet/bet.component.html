@@ -1,0 +1,67 @@
+<nz-card>
+  <form nz-form [formGroup]="betFilterForm">
+    <div class="row">
+      <div class="col-3">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>From</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="fromDate" nzPlaceHolder="Select date" nzFormat="dd-MM-yyyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-3">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>To</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="toDate" nzPlaceHolder="Select date" nzFormat="dd-MM-yyyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-2">
+        <button nz-button nzType="primary" title="Filter" (click)="doFilter()" [disabled]="betFilterForm.invalid">Filter</button>
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </form>
+  <nz-divider></nz-divider>
+  <nz-table [nzData]="bets" [nzLoading]="isSpinning"
+            [nzShowPagination]="false" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th>Tele Id</th>
+      <th>Tele Name</th>
+      <th>Bet Type</th>
+      <th>Bet Number</th>
+      <th>Amount</th>
+      <th>Game Code</th>
+      <th>Win/Lose</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of bets ;trackBy: trackId">
+      <td>{{item.teleId}}</td>
+      <td>{{item.teleName}}</td>
+      <td>{{item.betNumber}}</td>
+      <td>{{item.betType}}</td>
+      <td>{{item.betAmount}}</td>
+      <td>{{item.gameCode}}</td>
+      <td>{{item.win}}</td>
+      <td>
+        <a [routerLink]="['/bet', item.teleId, 'history']" class="m-r-5" style="line-height: 0;" nz-button nzType="default"
+           nzShape="circle" nz-tooltip nzTitle="Bets history" nzPlacement="bottom">
+          <i nz-icon nzType="ordered-list" theme="outline"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <div class="ant-table-pagination ant-pagination">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                   [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+    </ng-template>
+  </div>
+</nz-card>

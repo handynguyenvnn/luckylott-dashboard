@@ -1,0 +1,36 @@
+<nz-card>
+  <nz-table #listViewTable [nzData]="messageInfos" [nzLoading]="isSpinning" [nzShowPagination]="false" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th>Telegram ID</th>
+      <th>Message ID</th>
+      <th>Action key</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let messageInfo of messageInfos ;trackBy: trackId">
+      <td>{{ messageInfo?.teleId }}</td>
+      <td>{{ messageInfo?.messageId }}</td>
+      <td>{{ messageInfo?.action }}</td>
+      <!--td class="text-md-right">
+        <a class="m-r-5" style="line-height: 0;" nz-button nzType="default"
+           nzShape="circle" nz-tooltip nzTitle="Delete" nzPlacement="bottom" (click)="deleteMsg(messageInfo)" *ngIf="!messageInfo?.action">
+          <i nz-icon nzType="edit" theme="outline"></i>
+        </a>
+        <a class="m-r-5" style="line-height: 0;" nz-button nzType="default"
+           nzShape="circle" nz-tooltip nzTitle="Delete" nzPlacement="bottom" (click)="deleteMsgAction(messageInfo)" *ngIf="messageInfo?.action">
+          <i nz-icon nzType="edit" theme="outline"></i>
+        </a>
+      </td-->
+    </tr>
+    </tbody>
+  </nz-table>
+  <div class="ant-table-pagination ant-pagination">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                   [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+    </ng-template>
+  </div>
+</nz-card>

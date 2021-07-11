@@ -1,0 +1,142 @@
+<div class="page-header has-tab">
+  <h2 class="font-weight-normal">Profile</h2>
+</div>
+<nz-tabset class="page-header-tab">
+  <nz-tab nzTitle="Account">
+    <div class="container">
+      <!-- <nz-card nzTitle="Basic Infomation">
+        <hr class="m-v-25">
+        <form nz-form nzLayout="vertical" novalidate [formGroup]="changeInfoForm">
+          <div class="row">
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-label>User Name</nz-form-label>
+                <nz-form-control>
+                  <input nz-input placeholder="Username" disabled formControlName="login">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-label>Email</nz-form-label>
+                <nz-form-control>
+                  <input nz-input placeholder="Email" type="email" value="@marshallnich" disabled
+                         formControlName="email">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-label>First Name</nz-form-label>
+                <nz-form-control>
+                  <input nz-input placeholder="First Name" formControlName="firstName">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-label>Last Name</nz-form-label>
+                <nz-form-control>
+                  <input nz-input placeholder="Last Name" formControlName="lastName">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-label>Phone Number</nz-form-label>
+                <nz-form-control>
+                  <input nz-input placeholder="Phone Number" formControlName="phone">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzType="flex" nzJustify="end">
+            <button class="m-t-40" nz-button nzType="primary" (click)="saveInfo()">Update</button>
+          </div>
+        </form>
+      </nz-card> -->
+      <nz-card nzTitle="Change Password">
+        <nz-alert nzType="success" nzMessage="Password changed!" *ngIf="changePwdSuccees"></nz-alert>
+        <nz-alert nzType="error" nzMessage="{{changePwdErrorMsg}}" *ngIf="changePwdError"></nz-alert>
+        <nz-alert nzType="error" nzMessage="The password and its confirmation do not match!" *ngIf="pwdNotMatch"></nz-alert>
+        <form nz-form [formGroup]="changePWForm" (ngSubmit)="changePassword()">
+          <div class="row">
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-label nzFor="currentPassword" nzRequired>Old Password</nz-form-label>
+                <nz-form-control>
+                  <input formControlName="currentPassword" nz-input type="password" placeholder="Old Password">
+                  <nz-form-explain
+                    *ngIf="changePWForm.get('currentPassword')!.invalid && (changePWForm.get('currentPassword')!.dirty || changePWForm.get('currentPassword')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="changePWForm.get('currentPassword')?.errors?.required">
+                      Your password is required.
+                    </small>
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-label nzFor="newPassword" nzRequired>New Password</nz-form-label>
+                <nz-form-control>
+                  <input formControlName="newPassword" nz-input type="password" placeholder="New Password">
+                  <nz-form-explain *ngIf="changePWForm.get('newPassword')!.invalid && (changePWForm.get('newPassword')!.dirty || changePWForm.get('newPassword')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="changePWForm.get('newPassword')?.errors?.required">
+                      Your password is required.
+                    </small>
+
+                    <small class="form-text text-danger"
+                           *ngIf="changePWForm.get('newPassword')?.errors?.minlength">
+                      Your password is required to be at least 4 characters.
+                    </small>
+
+                    <small class="form-text text-danger"
+                           *ngIf="changePWForm.get('newPassword')?.errors?.maxlength">
+                      Your password cannot be longer than 50 characters.
+                    </small>
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-label nzFor="confirmPassword" nzRequired>Confirm</nz-form-label>
+                <nz-form-control>
+                  <input formControlName="confirmPassword" nz-input type="password" placeholder="Confirm Password">
+                  <nz-form-explain
+                    *ngIf="changePWForm.get('confirmPassword')!.invalid && (changePWForm.get('confirmPassword')!.dirty || changePWForm.get('confirmPassword')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="changePWForm.get('confirmPassword')?.errors?.required">
+                      Your confirmation password is required.
+                    </small>
+
+                    <small class="form-text text-danger"
+                           *ngIf="changePWForm.get('confirmPassword')?.errors?.minlength">
+                      Your confirmation password is required to be at least 4 characters.
+                    </small>
+
+                    <small class="form-text text-danger"
+                           *ngIf="changePWForm.get('confirmPassword')?.errors?.maxlength">
+                      Your confirmation password cannot be longer than 50 characters.
+                    </small>
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row nzType="flex" nzJustify="end">
+            <nz-form-item>
+              <nz-form-control>
+                <button class="m-t-40" nz-button nzType="primary" [disabled]="!changePWForm.valid">Change</button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </form>
+      </nz-card>
+    </div>
+  </nz-tab>
+</nz-tabset>

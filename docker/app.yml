@@ -1,0 +1,13 @@
+version: '2'
+services:
+  fe-dashboard-keno-crypto-dev:
+    container_name: fe-dashboard-keno-crypto-dev-cont
+    build:
+      context: ../
+    image: fe-dashboard-keno-crypto-dev:latest
+    ports:
+      - '3030:80'
+    networks:
+      - fe-dashboard-keno-crypto-dev-net
+networks:
+  fe-dashboard-keno-crypto-dev-net:

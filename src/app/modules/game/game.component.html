@@ -1,0 +1,53 @@
+<nz-card>
+    <div class="row m-b-30">
+      <div class="col-lg-4">
+      </div>
+      <div class="col-lg-8 text-right">
+        <button nz-button nzType="primary" [disabled]="haveGame" (click)="buildGameModal()">
+          <i nz-icon nzType="plus-circle" nzTheme="outline"></i>New Game
+        </button>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+    <nz-table [nzData]="games" [nzLoading]="isSpinning" [nzShowPagination]="false" [nzFrontPagination]="false">
+      <thead>
+      <tr>
+        <th>Game Code</th>
+        <th>Pool</th>
+        <th>Draw Date</th>
+        <th>Close Date</th>
+        <th>Game Result</th>
+        <th>Game Status</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let game of games ;trackBy: trackId">
+          <td>{{ game?.gameCode}}</td>
+          <td>{{ game.poolName }}</td>
+          <td>{{ convertUTC(game?.drawDate) }}</td>
+          <td>{{ convertUTC(game?.closeDate) }}</td>
+          <td *ngIf="game?.gameResults[0]">{{ game?.gameResults[0]?.betType }}: <b>{{game?.gameResults[0]?.result }}</b> <br>
+            {{ game?.gameResults[1]?.betType }}: <b>{{game?.gameResults[1]?.result }}</b> <br>
+            {{ game?.gameResults[2]?.betType }}: <b>{{game?.gameResults[2]?.result }}</b>
+          </td>
+          <td *ngIf="!game?.gameResults[0]"></td>
+          <td>{{ game.gameStatus }}</td>
+          <td class="text-md-right">
+            <a href="javascript:void (0);" class="m-r-5" style="line-height: 0;" nz-button nzType="default"
+               nzShape="circle" nz-tooltip nzTitle="Edit Game" nzPlacement="bottom" (click)="buildGameModal(game)">
+              <i nz-icon nzType="edit" theme="outline"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="ant-table-pagination ant-pagination">
+      <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                     [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+      <ng-template #rangeTemplate let-range="range" let-total>
+        {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+      </ng-template>
+    </div>
+</nz-card>

@@ -1,0 +1,38 @@
+<nz-card>
+  <form nz-form nzLayout="vertical" novalidate [formGroup]="sendMsgForm">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <nz-form-item>
+          <nz-form-label>Telegram ID</nz-form-label>
+          <nz-form-control>
+            <input type="text" nz-input placeholder="Please input ids" formControlName="ids">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Message</nz-form-label>
+          <nz-form-control>
+            <textarea rows="4" nz-input placeholder="Please input message" formControlName="message"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-upload
+            [nzFileList]="fileList"
+            [nzBeforeUpload]="beforeUpload"
+            [nzRemove]="removeUpload"
+          >
+            <button nz-button><i nz-icon nzType="upload"></i>Click to Upload</button>
+          </nz-upload>
+        </nz-form-item>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <div style="text-align: center">
+          <button nz-button nzType="primary" (click)="handleUpload()" [disabled]="isSaving">Send</button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

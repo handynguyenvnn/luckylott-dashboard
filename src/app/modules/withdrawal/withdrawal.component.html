@@ -1,0 +1,89 @@
+<nz-card>
+  <form nz-form [formGroup]="withdrawalsFilterForm">
+    <div class="row m-b-30">
+      <div class="col-2">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Id</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <input type="text" nz-input formControlName="teleId" nzPlaceHolder="Input tele id">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-2">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Name</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <input type="text" nz-input formControlName="teleName" nzPlaceHolder="Input tele name">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-3">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>From</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="fromDate" nzPlaceHolder="Select date" nzFormat="dd-MM-yyyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-3">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>To</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="toDate" nzPlaceHolder="Select date" nzFormat="dd-MM-yyyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-2">
+        <button nz-button nzType="primary" title="Filter" (click)="doFilter()" [disabled]="withdrawalsFilterForm.invalid">Filter</button>
+      </div>
+    </div>
+  </form>
+  <div class="d-flex justify-content-center">
+    <div class="media">
+      <nz-avatar [nzSize]="50" nzIcon="dollar" class="ant-avatar-blue"  ></nz-avatar>
+      <div class="m-l-15">
+          <h2 class="m-b-0">{{this.totalWithdrawals | number}} mBTC</h2>
+          <p class="m-b-0 text-muted">Total Withdrawal</p>
+      </div>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table #listViewTable [nzData]="withdrawals" [nzLoading]="isSpinning" [nzShowPagination]="false" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th>TeleID</th>
+      <th>Tele Name</th>
+      <th>Amount</th>
+      <th>Submitted Date</th>
+      <th>Receving Address</th>
+      <th>Status</th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let withdrawal of withdrawals ;trackBy: trackId">
+      <td>{{ withdrawal.teleId }}</td>
+      <td>{{ withdrawal.teleName }}</td>
+      <td>{{withdrawal.amount}}</td>
+      <td>{{ withdrawal.submitDate | date: 'dd-MM-yyyy h:mm:ss'}}</td>
+      <td>{{ withdrawal.playerAddress }}</td>
+      <td>{{ withdrawal.withdrawalStatus }}</td>
+      <td>
+        <button nz-button nzType="primary" (click)="buildWithdrawalModal(withdrawal, 'REJECTED')" *ngIf="withdrawal.withdrawalStatus === 'PENDING'">Reject</button>
+      </td>
+      <td>
+        <button nz-button nzType="danger" (click)="buildWithdrawalModal(withdrawal, 'APPROVED')" *ngIf="withdrawal.withdrawalStatus === 'PENDING'">Approve</button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <div class="ant-table-pagination ant-pagination">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                   [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+    </ng-template>
+  </div>
+</nz-card>

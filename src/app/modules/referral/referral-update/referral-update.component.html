@@ -1,0 +1,28 @@
+<form nz-form nzLayout="vertical" novalidate [formGroup]="updateReferralForm">
+    <div class="row">
+      <div class="col-md-6">
+        <nz-form-item>
+          <nz-form-label>Tele ID</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="Please input teleId" formControlName="teleId" disabled>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-md-6">
+        <nz-form-item>
+          <nz-form-label>Code</nz-form-label>
+          <nz-form-control>
+            <input type="text" nz-input placeholder="Please input code" formControlName="code">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <div *nzModalFooter>
+          <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+          <button nz-button nzType="primary" (click)="save()" [disabled]="updateReferralForm.invalid || isSaving">Save</button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </form>

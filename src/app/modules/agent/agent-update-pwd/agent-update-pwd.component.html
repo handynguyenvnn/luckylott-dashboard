@@ -1,0 +1,23 @@
+<form nz-form nzLayout="vertical" novalidate [formGroup]="agentPdwForm">
+  <div class="row">
+    <div class="col-md-12">
+      <nz-form-item>
+        <nz-form-label>New Password</nz-form-label>
+        <nz-form-control>
+          <input type="password" nz-input placeholder="Please input password" formControlName="newPassword">
+          <div class="text-danger font-size-12" *ngIf="changePwdError">
+            Something went wrong!
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+        <button nz-button nzType="primary" (click)="changePassword()" [disabled]="agentPdwForm.invalid || isSaving">Update password</button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>

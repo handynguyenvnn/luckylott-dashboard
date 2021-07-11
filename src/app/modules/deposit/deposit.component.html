@@ -1,0 +1,35 @@
+<nz-card>
+  <nz-table #listViewTable [nzData]="deposits" [nzScroll]="{ x: '100vw' }"
+            [nzLoading]="isSpinning" [nzShowPagination]="false" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th>Address</th>
+      <th>Amount</th>
+      <th>Deposit Id</th>
+      <th>Status Code</th>
+      <th>Status Text</th>
+      <th>Deposit Date</th>
+      <th>Txn Id</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let deposit of deposits ;trackBy: trackId">
+      <td>{{ deposit.address }}</td>
+      <td>{{ deposit.amount }}</td>
+      <td>{{ deposit.depositId }}</td>
+      <td>{{ deposit.statusCode }}</td>
+      <td>{{ deposit.statusText }}</td>
+      <td>{{deposit?.createdDate | date: 'dd-MM-yyyy h:mm:ss' }}</td>
+      <td>{{ deposit.txnId }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <div class="ant-table-pagination ant-pagination">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                   [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+    </ng-template>
+  </div>
+</nz-card>

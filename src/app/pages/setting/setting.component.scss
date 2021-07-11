@@ -1,0 +1,42 @@
+.settings-nav{
+  &__link {
+    text-decoration: none;
+    background-color: transparent;
+    &:hover {
+      color: #0b5edc;
+    }
+  }
+
+  &__action {
+    display: block;
+    padding: 15px;
+    &:hover {
+      background-color: #f9fafb;
+      text-decoration: none;
+      outline: none;
+    }
+  }
+
+  &__media {
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1.6rem;
+    border-radius: 3px;
+    background-color: #f4f6f8;
+  }
+
+  &__title {
+    font-weight: 500;
+    color: #0d3064;
+  }
+
+  &__description {
+    color: grey;
+  }
+}

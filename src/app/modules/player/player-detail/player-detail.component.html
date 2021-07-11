@@ -1,0 +1,48 @@
+<nz-card>
+  <div class="d-flex justify-content-between p-b-20 border-bottom">
+    <div class="media align-items-center">
+      <nz-avatar nzIcon="user" [nzSize]="55" class="ant-avatar-blue"></nz-avatar>
+      <div class="m-l-15">
+        <h2 class="font-weight-bold font-size-30 m-b-0">
+          {{playerDetail?.balance}}
+          <span class="font-size-13 font-weight-semibold"> Balance(mBTC)</span>
+        </h2>
+        <h4 class="m-b-0">@ {{player?.teleId}}</h4>
+      </div>
+    </div>
+  </div>
+  <ul class="list-unstyled m-v-30">
+    <li class="m-b-20">
+      <div class="d-flex justify-content-between">
+        <span class="text-dark font-weight-semibold">Win</span>
+        <div class="text-success font-size-16">
+          {{playerDetail?.win}} mBTC
+        </div>
+      </div>
+    </li>
+    <li class="m-b-20">
+      <div class="d-flex justify-content-between">
+        <span class="text-dark font-weight-semibold">Lost</span>
+        <div class="text-success font-size-16">
+          {{playerDetail?.lose}} mBTC
+        </div>
+      </div>
+    </li>
+    <li class="m-b-20">
+      <div class="d-flex justify-content-between">
+        <span class="text-dark font-weight-semibold">Withdrawal</span>
+        <div class="text-success font-size-16">
+          {{playerDetail?.withdraw}} mBTC
+        </div>
+      </div>
+    </li>
+    <li class="m-b-20">
+      <div class="d-flex justify-content-between">
+        <span class="text-dark font-weight-semibold">Credit</span>
+        <div class="text-success font-size-16">
+          {{playerDetail?.credit}} mBTC
+        </div>
+      </div>
+    </li>
+  </ul>
+</nz-card>

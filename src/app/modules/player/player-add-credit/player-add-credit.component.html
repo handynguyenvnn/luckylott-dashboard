@@ -1,0 +1,32 @@
+<form nz-form nzLayout="vertical" novalidate [formGroup]="addCreditForm">
+  <div class="row">
+    <div class="col-md-6">
+      <nz-form-item>
+        <nz-form-label>Credit Amount</nz-form-label>
+        <nz-form-control>
+          <input type="number" nz-input placeholder="Please input credit amount" formControlName="amount">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-md-6">
+      <nz-form-item>
+        <nz-form-label>Income Type</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="fromType">
+            <nz-option nzValue="FROM_ADMIN" nzLabel="From Admin"></nz-option>
+            <nz-option nzValue="MARKETING" nzLabel="Marketing"></nz-option>
+            <nz-option nzValue="WON_GAME" nzLabel="Win Game"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+        <button nz-button nzType="primary" (click)="save()" [disabled]="addCreditForm.invalid || isSaving">Add credit</button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>

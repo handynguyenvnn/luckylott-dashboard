@@ -1,0 +1,33 @@
+<nz-card>
+    <nz-table [nzData]="bets" [nzLoading]="isSpinning"
+              [nzShowPagination]="false" [nzFrontPagination]="false">
+      <thead>
+        <tr>
+            <th>TeleID</th>
+            <th>Player</th>
+            <th>Game</th>
+            <th>Bet Number</th>
+            <th>Bet Amount</th>
+            <th>Bet Date</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let bet of bets ;trackBy: trackId">
+        <td>{{ bet.teleId }}</td>
+        <td>{{ bet.teleName }}</td>
+        <td>{{ bet.gameCode }}</td>
+        <td>{{ bet.betNumber }}</td>
+        <td>{{ bet.betAmount }}</td>
+        <td>{{ bet.createdDate | date: 'dd-MM-yyyy h:mm:ss' }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <div class="ant-table-pagination ant-pagination">
+      <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                     [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+      <ng-template #rangeTemplate let-range="range" let-total>
+        {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+      </ng-template>
+    </div>
+  </nz-card>

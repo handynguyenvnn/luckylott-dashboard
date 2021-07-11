@@ -1,0 +1,58 @@
+<nz-card>
+  <form nz-form [formGroup]="merchantFilterForm">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-3">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>From</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="fromDate" nzPlaceHolder="Select date" nzFormat="dd-MM-yyyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-3">
+        <nz-form-item>
+          <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>To</nz-form-label>
+          <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="toDate" nzPlaceHolder="Select date" nzFormat="dd-MM-yyyy"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-2">
+        <button nz-button nzType="primary" title="Filter" (click)="doFilter()" [disabled]="merchantFilterForm.invalid">Filter</button>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </form>
+    <nz-divider></nz-divider>
+    <nz-table #listViewTable [nzData]="reportAgents" [nzLoading]="isSpinning" [nzShowPagination]="false" [nzFrontPagination]="false">
+      <thead>
+      <tr>
+        <th>Agent Name</th>
+        <th>Agent Code</th>
+        <th>Commission Percent</th>
+        <th>Commission Amount</th>
+        <th>Total Bet Amount</th>
+        <th>Total User</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reportAgent of reportAgents ;trackBy: trackId">
+          <td>{{ reportAgent?.merchant?.name }}</td>
+          <td>{{ reportAgent?.merchant?.code }}</td>
+          <td>{{ reportAgent?.merchant.commission }}</td>
+          <td>{{ reportAgent?.commissionAmount }}</td>
+          <td>{{ reportAgent?.betAmount }}</td>
+          <td>{{ reportAgent?.totalUser }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="ant-table-pagination ant-pagination">
+      <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                     [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+      <ng-template #rangeTemplate let-range="range" let-total>
+        {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+      </ng-template>
+    </div>
+</nz-card>

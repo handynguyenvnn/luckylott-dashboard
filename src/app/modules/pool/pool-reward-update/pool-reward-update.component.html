@@ -1,0 +1,75 @@
+<nz-card>
+  <form nz-form nzLayout="vertical" novalidate [formGroup]="rewardForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-label>Bet Type</nz-form-label>
+              <nz-form-control>
+                <nz-select formControlName="betType" nzPlaceHolder="Select a bet Type">
+                  <nz-option nzValue="NUM_2" nzLabel="NUM_2"></nz-option>
+                  <nz-option nzValue="NUM_3" nzLabel="NUM_3"></nz-option>
+                  <nz-option nzValue="NUM_4" nzLabel="NUM_4"></nz-option>
+                  <nz-option nzValue="NUM_4_RAND" nzLabel="NUM_4_RAND"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-label>Times</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="Please input times" formControlName="times">
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-label>Share Percent</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="Please input share percent" formControlName="equalSharePercent">
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nz-form-item>
+      <nz-form-control>
+        <div class="text-md-center">
+          <button nz-button nzType="default">Cancel</button>
+          <button nz-button nzType="primary" (click)="save()" [disabled]="rewardForm.invalid || isSaving">Update</button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>
+
+<nz-table #basicTable [nzData]="poolRewards" [nzShowPagination]="false" [nzFrontPagination]="false">
+  <thead>
+  <tr>
+    <th>Times</th>
+    <th>Bet Type</th>
+    <th>Share Percent </th>
+    <th>Pool</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let poolReward of basicTable.data ;trackBy: trackId">
+    <td>{{ poolReward?.times | number}}</td>
+    <td>{{ poolReward?.betType}}</td>
+    <td>{{ poolReward?.equalSharePercent | number }}</td>
+    <td>{{ poolReward?.poolName }}</td>
+    <td class="text-md-right">
+      <a href="javascript:void (0);" class="m-r-5" style="line-height: 0;" nz-button nzType="default"
+         nzShape="circle" nz-tooltip nzTitle="Edit Game" nzPlacement="bottom"
+         (click)="updateForm(poolReward)">
+        <i nz-icon nzType="edit" theme="outline"></i>
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+

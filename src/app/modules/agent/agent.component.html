@@ -1,0 +1,55 @@
+<nz-card>
+  <div class="row m-b-30">
+    <div class="col-lg-4">
+    </div>
+    <div class="col-lg-8 text-right">
+      <button nz-button nzType="primary" (click)="addAgentModal()">
+        <i nz-icon nzType="plus-circle" nzTheme="outline"></i>New Agent
+      </button>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <nz-table #listViewTable [nzData]="agents"
+            [nzLoading]="isSpinning" [nzShowPagination]="false" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th>login</th>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Commission</th>
+      <th>Status</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let agent of agents ;trackBy: trackId">
+      <td>{{ agent.userLogin }}</td>
+      <td>{{ agent.name }}</td>
+      <td>{{ agent.code }}</td>
+      <td>{{ agent.commission }}</td>
+      <td>
+        <button nz-button nzType="default" (click)="setActive(agent, true)" *ngIf="!agent.activated">Deactivated</button>
+        <button nz-button nzType="danger" (click)="setActive(agent, false)" *ngIf="agent.activated"
+                [disabled]="!currentAccount || currentAccount.login === agent.userLogin">Activated</button>
+      </td>
+      <td><button nz-button nzType="primary" (click)="agentChangePwdModal(agent.userLogin)">Change password</button></td>
+      <td>
+        <a href="javascript:void (0);" class="m-r-5" style="line-height: 0;" nz-button nzType="default"
+               nzShape="circle" nz-tooltip nzTitle="Add agent" nzPlacement="bottom" (click)="addAgentModal(agent)">
+              <i nz-icon nzType="edit" theme="outline"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <div class="ant-table-pagination ant-pagination">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                   [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+    </ng-template>
+  </div>
+</nz-card>

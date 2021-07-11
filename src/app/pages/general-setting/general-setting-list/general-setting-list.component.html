@@ -1,0 +1,55 @@
+<div class="container p-50">
+  <div nz-row nzType="flex">
+    <div nz-col nzSpan="24">
+      <nz-card>
+        <div class="row">
+          <nz-form-item class="col-md-12">
+            <nz-form-label nzNoColon>EXTERNAL API KEY</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="Please input api key" [(ngModel)]="externalApiKey">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="col-md-12">
+            <nz-form-label nzNoColon>EXTERNAL REGISTER PLAYER ENDPOINT</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="Please input end point" [(ngModel)]="externalPlayerEndpoint">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="col-md-12">
+            <nz-form-label nzNoColon>EXTERNAL REGISTER ADDRESS ENDPOINT</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="Please input bot token" [(ngModel)]="externalAddressEndpoint">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="col-md-12">
+            <nz-form-label nzNoColon>EXTERNAL TRACKING BET ENDPOINT</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="Please input api key" [(ngModel)]="externalBetEndpoint">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="col-md-12">
+            <nz-form-label nzNoColon>EXTERNAL TRACKING WITHDRAWAL ENDPOINT</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="Please input end point" [(ngModel)]="externalWithdrawalEndpoint">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="col-md-12">
+            <nz-form-label nzNoColon>EXTERNAL SET REF CODE ENDPOINT</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="Please input end point" [(ngModel)]="externalRefCodeEndpoint">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="col-md-12">
+            <nz-form-label nzNoColon>TELEGRAM BOT TOKEN</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="Please input bot token" [(ngModel)]="telegramBotToken">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <div nz-row nzType="flex" nzJustify="end">
+    <button nz-button nzType="primary" (click)="save()">Save</button>
+  </div>
+</div>

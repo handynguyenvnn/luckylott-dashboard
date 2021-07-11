@@ -1,0 +1,31 @@
+<nz-card>
+  <nz-table #listViewTable [nzData]="referrals" [nzShowPagination]="false" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th>TeleID</th>
+      <th>Code</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let referral of referrals ;trackBy: trackId">
+      <td>{{ referral.teleId }}</td>
+      <td>{{ referral.code }}</td>
+      <td class="text-md-right">
+        <a class="m-r-5" style="line-height: 0;" nz-button nzType="default"
+           nzShape="circle" nz-tooltip nzTitle="Edit referral" nzPlacement="bottom" (click)="editReferral(referral)">
+          <i nz-icon nzType="edit" theme="outline"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <div class="ant-table-pagination ant-pagination">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="totalItems" [nzPageSize]="itemsPerPage"
+                   [nzShowTotal]="rangeTemplate" (nzPageIndexChange)="loadPage($event)"></nz-pagination>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }} - {{ range[1] }} of {{ totalItems }} items
+    </ng-template>
+  </div>
+</nz-card>

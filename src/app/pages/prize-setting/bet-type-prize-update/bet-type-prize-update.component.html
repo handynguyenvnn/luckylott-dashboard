@@ -1,0 +1,42 @@
+<form nz-form nzLayout="vertical" novalidate [formGroup]="editForm">
+  <div class="row">
+    <div class="col-md-4">
+      <nz-form-item>
+        <nz-form-label>Bet Type</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="betTypeId" nzDisabled>
+            <nz-option *ngFor="let betTypeOption of bettypes; trackBy: trackById" [nzValue]="betTypeOption.id" [nzLabel]="betTypeOption.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-md-4">
+      <nz-form-item>
+        <nz-form-label>Prize</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="prizeGame" id="field_prizeGame" nzDisabled>
+            <nz-option nzValue="FIRST_PRIZE" nzLabel="FIRST_PRIZE"></nz-option>
+            <nz-option nzValue="SECOND_PRIZE" nzLabel="SECOND_PRIZE"></nz-option>
+            <nz-option nzValue="THIRD_PRIZE" nzLabel="THIRD_PRIZE"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-md-4">
+      <nz-form-item>
+        <nz-form-label>Times</nz-form-label>
+        <nz-form-control>
+          <input type="text" nz-input placeholder="Please input times" formControlName="times">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="destroyModal()">Cancel</button>
+        <button nz-button nzType="primary" (click)="save()" [disabled]="editForm.invalid || isSaving">Save</button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>
